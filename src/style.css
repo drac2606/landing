@@ -24,73 +24,182 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 2rem 1rem;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #242424;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+main {
+  max-width: 1280px;
+  width: 100%;
+  background: #fff;
+  color: #333;
+  border-radius: 1rem;
+  padding: 2rem 3rem;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1, h3, h4 {
+  margin: 0;
+  user-select: none;
+}
+
+/* Línea decorativa */
+hr {
+  border-top: 3px solid #b91c1c;
+  border-radius: 12px;
+  width: 6rem;
+  margin: 1rem auto 2rem auto;
+  box-shadow: 0 2px 6px rgb(185 28 28 / 0.5);
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 3rem;
+  letter-spacing: 0.05em;
+  color: #b91c1c;
   text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 3px rgb(185 28 28 / 0.7);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 2.8rem;
+  letter-spacing: 0.05em;
+  color: #b91c1c;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 2px rgb(185 28 28 / 0.7);
 }
 
-.card {
-  padding: 2em;
+/* --- Platos Fuertes --- */
+.platos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  justify-items: center;
 }
 
-.read-the-docs {
-  color: #888;
+.plato {
+  background: #fefefe;
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgb(0 0 0 / 0.1);
+  padding: 1rem;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  user-select: none;
+  cursor: default;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.plato:hover {
+  box-shadow: 0 12px 24px rgb(0 0 0 / 0.2);
+  transform: translateY(-6px);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+.plato img {
+  border-radius: 0.75rem;
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
+  transition: box-shadow 0.3s ease;
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.plato:hover img {
+  box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.plato h4 {
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #b91c1c;
+}
+
+.plato p {
+  font-size: 1rem;
+  color: #555;
+  padding: 0 0.5rem;
+}
+
+/* --- Bebidas --- */
+.bebidas-container {
+  display: flex;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  align-items: flex-start;
+  user-select: none;
+}
+
+.bebidas-container ul {
+  list-style: disc inside;
+  flex: 1 1 60%;
+  color: #444;
+  font-size: 1.1rem;
+  column-count: 2;
+  column-gap: 1.5rem;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.bebidas-container .imagenes {
+  flex: 1 1 35%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.bebidas-container .imagenes img {
+  border-radius: 0.75rem;
+  width: 48%;
+  height: 6rem;
+  object-fit: contain;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+  transition: box-shadow 0.3s ease;
+}
+.bebidas-container .imagenes img:hover {
+  box-shadow: 0 6px 12px rgb(0 0 0 / 0.2);
+}
+
+/* Movil: lista en dos columnas, imágenes abajo lado a lado */
+@media (max-width: 640px) {
+  .bebidas-container {
+    flex-direction: column;
+    align-items: center;
   }
-  a:hover {
-    color: #747bff;
+  .bebidas-container ul {
+    column-count: 2;
+    margin-bottom: 1rem;
+    max-width: 90vw;
   }
-  button {
-    background-color: #f9f9f9;
+  .bebidas-container .imagenes {
+    width: 90vw;
+    flex-direction: row;
+    justify-content: space-around;
   }
+  .bebidas-container .imagenes img {
+    width: 45%;
+    height: 5rem;
+  }
+}
+
+/* Quitar selección texto y cursor pointer */
+.plato, .plato *, .bebidas-container, .bebidas-container * {
+  user-select: none;
+  cursor: default;
 }
