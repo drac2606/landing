@@ -1,6 +1,7 @@
 "use strict";
 
 import { fetchFakerData } from './functions.js';
+import { saveVote, getVotes } from './firebase.js';
 
 /**
  * Muestra la notificación interactiva agregando la clase 'md:block'.
@@ -79,8 +80,60 @@ const loadData = async () => {
     }
 };
 
+function enableForm() {
+  const form = document.getElementById('form_voting');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const select = document.getElementById('select_product');
+    const productID = select.value;
+    if (!productID) return;
+    await saveVote(productID);
+    form.reset();
+    displayVotes(); // Mostrar resultados después de votar
+  });
+}
+
+async function displayVotes() {
+  const resultsDiv = document.getElementById('results');
+  if (!resultsDiv) return;
+
+  const result = await getVotes();
+  if (!result.success) {
+    resultsDiv.innerHTML = '<p class="text-red-500 text-center">Error al obtener los votos</p>';
+    return;
+  }
+  const votes = result.data;
+  // Contar votos por producto
+  const voteCounts = {};
+  for (const key in votes) {
+    const vote = votes[key];
+    if (vote && vote.productID) {
+      voteCounts[vote.productID] = (voteCounts[vote.productID] || 0) + 1;
+    }
+  }
+  // Generar tabla
+  let tableHtml = '<table class="min-w-full text-center"><thead><tr><th class="px-4 py-2">Producto</th><th class="px-4 py-2">Total de votos</th></tr></thead><tbody>';
+  const products = [
+    { id: 'product1', name: 'Producto 1' },
+    { id: 'product2', name: 'Producto 2' },
+    { id: 'product3', name: 'Producto 3' }
+  ];
+  let hasVotes = false;
+  for (const product of products) {
+    const count = voteCounts[product.id] || 0;
+    tableHtml += `<tr><td class="border px-4 py-2">${product.name}</td><td class="border px-4 py-2">${count}</td></tr>`;
+    if (count > 0) hasVotes = true;
+  }
+  tableHtml += '</tbody></table>';
+  resultsDiv.innerHTML = hasVotes ? tableHtml : '<p class="text-gray-500 text-center mt-16">Aún no hay votos registrados</p>';
+}
+
 (() => {
   showToast();
   showVideo();
   loadData();
+  enableForm();
+  displayVotes(); // Mostrar resultados al cargar la página
 })();
