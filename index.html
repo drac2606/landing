@@ -43,37 +43,27 @@
         </ul>
     </nav>
 
-    <main id="inicio" class="bg-slate-50 dark:bg-gray-900">
-      <!-- Presentación -->
-      <div id="container-01" class="mx-auto px-4 py-20 text-center">
-        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-          Tu presencia digital comienza aquí
-        </h1>
-        <p class="mt-6 text-lg leading-relaxed text-gray-600 max-w-2xl mx-auto dark:text-gray-300">
-          Creamos experiencias web atractivas y rápidas con Tailwind CSS 4.1. Dale vida a tus ideas con un diseño moderno y responsivo.
-        </p>
-        <div id="container-02" class="mt-8 flex justify-center gap-4">
-          <button id="start" class="inline-block px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-            Comenzar
-          </button>
-          <button id="demo" class="inline-block px-6 py-3 border border-gray-300 text-gray-700 rounded-lg dark:border-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
-            Ver demo
-          </button>
-        </div>
-      </div>
-    </main>
+    <!-- Hero -->
+    <section id="inicio" class="bg-slate-900 text-white py-6 px-4 text-center">
+  <div class="max-w-5xl mx-auto">
+    <h1 class="text-3xl md:text-4xl font-bold mb-1">Sabor del mar, fuego del corazón</h1>
+    <p class="text-base md:text-lg mb-2">Auténtica comida marina en La Libertad, Santa Elena</p>
 
-      <!-- Sección de Imágenes -->
-      <section class="bg-white dark:bg-gray-900">
-        <div id="container-03" class="px-4 py-12 mx-auto max-w-md md:max-w-xl">
-          <div id="container-04" class="grid grid-cols-2 gap-4 md:grid-cols-4">
-            <img src="https://placehold.co/300x200" alt="Imagen 1" class="w-full h-auto rounded shadow-md">
-            <img src="https://placehold.co/300x200" alt="Imagen 2" class="w-full h-auto rounded shadow-md">
-            <img src="https://placehold.co/300x200" alt="Imagen 3" class="w-full h-auto rounded shadow-md">
-            <img src="https://placehold.co/300x200" alt="Imagen 4" class="w-full h-auto rounded shadow-md">
-          </div>
-        </div>
-      </section>
+    <!-- Video -->
+    <div class="aspect-video w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow mb-4">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover">
+        <source src="/public/video/video.mp4" type="video/mp4">
+        Tu navegador no soporta video.
+      </video>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex flex-col sm:flex-row justify-center gap-3">
+      <a href="#ubicacion" class="bg-red-600 hover:bg-red-700 text-white py-2 px-5 rounded-lg font-semibold text-sm">Ver Ubicación</a>
+      <a href="#contacto" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-5 rounded-lg font-semibold text-sm">Realizar Reserva</a>
+    </div>
+  </div>
+</section>
 
 
 
@@ -277,53 +267,54 @@
         </div>
     </section>
 
-      <!-- Sección de Votación -->
-      <section class="flex flex-col items-center justify-center bg-white py-8">
-        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-           <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Vota por tu producto preferido</h2>
+    <!-- Promociones -->
+    <section class="w-full bg-white py-8 px-4">
+  <div class="max-w-6xl mx-auto">
+    <!-- Título -->
+    <h2 class="text-3xl font-bold text-center mb-4">Promociones y novedades</h2>
 
-           <div class="mb-6">
-           <form id="form_voting" class="relative flex items-center">
-              <select id="select_product"
-                 class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                 <option value="" disabled selected>Seleccione un producto</option>
-                 <option value="product1">Producto 1</option>
-                 <option value="product2">Producto 2</option>
-                 <option value="product3">Producto 3</option>
-              </select>
-              <button
-                 class="ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                 VOTAR
-              </button>
-           </form>
-           </div>
+    <!-- Contenedor de imágenes en grid responsive -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-0 w-full">
+      <div class="w-full flex justify-center">
+        <img src="/public/img/menu.jpg" alt="Promo 1" class="max-w-full h-auto object-contain">
+      </div>
+      <div class="w-full flex justify-center">
+        <img src="/public/img/2x1.jpg" alt="Promo 2" class="max-w-full h-auto object-contain">
+      </div>
+    </div>
+  </div>
+</section>
 
-           <div id="results" class="border border-gray-300 rounded-lg h-52 w-full p-2 bg-gray-50">
-              <p class="text-gray-500 text-center mt-16">Resultado de la votación</p>
-           </div>
-        </div>
-      </section>
-    
-     <div id="toast-interactive"
-         class="hidden fixed right-5 bottom-5 flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:divide-gray-700 dark:bg-gray-800"
-         role="alert">
-         <div class="flex">
+    <!-- Formulario -->
+    <section id="contacto" class="bg-slate-50 py-16 px-4">
+      <div class="max-w-xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6">Reserva tu mesa</h2>
+        <form class="space-y-4">
+          <input type="text" placeholder="Tu nombre" class="w-full p-3 border rounded" required />
+          <input type="email" placeholder="Tu correo" class="w-full p-3 border rounded" required />
+          <select class="w-full p-3 border rounded" required>
+            <option disabled selected>Número de personas</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3+</option>
+          </select>
+          <input type="date" class="w-full p-3 border rounded" required />
+          <button type="submit" class="w-full bg-red-600 text-white p-3 rounded hover:bg-red-700">Reservar</button>
+        </form>
+      </div>
+    </section>
 
-             <!-- Content -->
-             <div class="ms-3 text-sm font-normal">
-                 <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">Suscríbete ahora</span>
-                 <div class="mb-2">Suscríbete ahora para obtener beneficios de cliente premium y pro.</div>
-                 <div class="grid grid-cols-2 gap-2">
-                 <div>
-                     <a href="#"
-                     class="inline-flex justify-center w-full px-2 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">Sí, quiero</a>
-                 </div>
-                 <div>
-                     <a href="#"
-                     class="inline-flex justify-center w-full px-2 py-1.5 text-xs font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">No ahora</a>
-                 </div>
-                 </div>
-             </div>
+    <!-- Toast -->
+<div id="toast-interactive" class="hidden fixed right-5 bottom-5 max-w-xs p-4 bg-white rounded-lg shadow-md border dark:bg-gray-800 dark:text-white">
+  <div>
+    <p class="font-bold mb-1">Suscríbete ahora</p>
+    <p class="text-sm mb-3">Obtén beneficios exclusivos por ser cliente.</p>
+    <div class="flex justify-between gap-2">
+      <a href="#" class="bg-blue-600 text-white px-3 py-1 rounded text-sm">Sí, quiero</a>
+      <a href="#" class="bg-gray-200 text-black px-3 py-1 rounded text-sm">No ahora</a>
+    </div>
+  </div>
+</div>
 
 </main>
 
@@ -332,6 +323,7 @@
       <p>&copy; 2025 Fuego y Marea. Todos los derechos reservados.</p>
     </footer>
 
-    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./js/main.js"></script>.
   </body>
 </html>
+
