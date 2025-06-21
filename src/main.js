@@ -360,42 +360,42 @@ async function initializeTestimonials() {
 function initializeImageCarousel() {
   const carouselData = [
     {
-      image: '/public/img/parrillada.jpg',
+      image: '/img/parrillada.jpg',
       title: 'Parrillada Marinera',
       description: 'El favorito de nuestros clientes - Camarones, calamares, pulpo y pescado'
     },
     {
-      image: '/public/img/torre.jpg',
+      image: '/img/torre.jpg',
       title: 'Torre de Mariscos',
       description: 'Nuestra especialidad - Variedad de mariscos en torre especial'
     },
     {
-      image: '/public/img/ceviche.jpg',
+      image: '/img/ceviche.jpg',
       title: 'Ceviche Mixto',
       description: 'Nuestro plato estrella - Mariscos frescos marinados en limón'
     },
     {
-      image: '/public/img/langostinos.jpg',
+      image: '/img/langostinos.jpg',
       title: 'Langostinos a la Parrilla',
       description: 'Langostinos frescos a la parrilla con yuca frita y ensalada'
     },
     {
-      image: '/public/img/encocado.jpg',
+      image: '/img/encocado.jpg',
       title: 'Encocado de Pescado',
       description: 'Pescado cocido en leche de coco con pimientos - Tradición costeña'
     },
     {
-      image: '/public/img/pescado.jpg',
+      image: '/img/pescado.jpg',
       title: 'Pescado a la Brasa',
       description: 'Pescado entero cocinado al carbón con arroz y ensalada fresca'
     },
     {
-      image: '/public/img/cangrejo.jpg',
+      image: '/img/cangrejo.jpg',
       title: 'Cangrejo al Ajillo',
       description: 'Cangrejo salteado en ajo con toque de chile - Delicia costera'
     },
     {
-      image: '/public/img/cazuela.jpg',
+      image: '/img/cazuela.jpg',
       title: 'Cazuela de Mariscos',
       description: 'Mariscos en salsa espesa de maní y verde cocido - Sabor único'
     }
