@@ -1,205 +1,627 @@
+/* Estilos personalizados que complementan Tailwind CSS */
+
+/* Fuentes personalizadas */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Variables CSS personalizadas */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --primary-red: #dc2626;
+  --primary-red-hover: #b91c1c;
+  --secondary-orange: #ea580c;
+  --accent-gold: #f59e0b;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --bg-light: #fefefe;
+  --bg-gradient: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+  --shadow-light: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-medium: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-heavy: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  --shadow-glow: 0 0 20px rgba(220, 38, 38, 0.3);
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+/* Estilos base personalizados */
+body {
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Títulos con fuente personalizada */
+.font-playfair {
+  font-family: 'Playfair Display', serif;
 }
 
-body {
-  margin: 0;
-  padding: 2rem 1rem;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #242424;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  box-sizing: border-box;
+/* Animaciones personalizadas */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-main {
-  max-width: 1280px;
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.8s ease-out;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.8s ease-out;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Efectos hover personalizados para platos */
+.plato-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.plato-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
   width: 100%;
-  background: #fff;
-  color: #333;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.plato-card:hover::before {
+  left: 100%;
+}
+
+.plato-card:hover {
+  transform: translateY(-10px) scale(1.03) rotateY(5deg);
+  box-shadow: var(--shadow-heavy), var(--shadow-glow);
+}
+
+.plato-card img {
+  transition: all 0.4s ease;
+  border-radius: 0.75rem;
+}
+
+.plato-card:hover img {
+  transform: scale(1.08);
+}
+
+/* Borde animado para tarjetas de platos */
+.plato-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
   border-radius: 1rem;
-  padding: 2rem 3rem;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.4s ease;
+  pointer-events: none;
 }
 
-h1, h3, h4 {
-  margin: 0;
-  user-select: none;
+.plato-card:hover::after {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 20px var(--primary-red);
 }
 
-/* Línea decorativa */
-hr {
-  border-top: 3px solid #b91c1c;
-  border-radius: 12px;
-  width: 6rem;
-  margin: 1rem auto 2rem auto;
-  box-shadow: 0 2px 6px rgb(185 28 28 / 0.5);
+/* Badge de precio */
+.price-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--primary-red);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-medium);
+  z-index: 10;
 }
 
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: 3rem;
-  letter-spacing: 0.05em;
-  color: #b91c1c;
-  text-align: center;
-  margin-bottom: 2rem;
-  text-shadow: 1px 1px 3px rgb(185 28 28 / 0.7);
-}
-
-h3 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 800;
-  font-size: 2.8rem;
-  letter-spacing: 0.05em;
-  color: #b91c1c;
-  text-align: center;
-  margin-bottom: 2rem;
-  text-shadow: 1px 1px 2px rgb(185 28 28 / 0.7);
-}
-
-/* --- Platos Fuertes --- */
-.platos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-  justify-items: center;
-}
-
-.plato {
-  background: #fefefe;
-  border-radius: 1rem;
-  box-shadow: 0 6px 12px rgb(0 0 0 / 0.1);
-  padding: 1rem;
-  max-width: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  user-select: none;
+/* Efectos para bebidas */
+.bebida-item {
+  transition: all 0.3s ease;
   cursor: default;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
 }
-.plato:hover {
-  box-shadow: 0 12px 24px rgb(0 0 0 / 0.2);
+
+.bebida-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--primary-red);
+  transition: width 0.3s ease;
+}
+
+.bebida-item:hover::after {
+  width: 100%;
+}
+
+.bebida-item:hover {
   transform: translateY(-6px);
+  box-shadow: var(--shadow-medium);
 }
 
-.plato img {
-  border-radius: 0.75rem;
-  width: 100%;
-  height: 12rem;
-  object-fit: cover;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
-  transition: box-shadow 0.3s ease;
-}
-.plato:hover img {
-  box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
-}
-
-.plato h4 {
-  font-weight: 700;
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
-  color: #b91c1c;
-}
-
-.plato p {
-  font-size: 1rem;
-  color: #555;
-  padding: 0 0.5rem;
-}
-
-/* --- Bebidas --- */
-.bebidas-container {
-  display: flex;
-  gap: 2rem;
-  max-width: 800px;
-  margin: 0 auto 3rem auto;
-  align-items: flex-start;
+/* Imágenes de bebidas con efecto hover */
+.bebida-imagen {
+  transition: all 0.4s ease;
   user-select: none;
 }
 
-.bebidas-container ul {
-  list-style: disc inside;
-  flex: 1 1 60%;
-  color: #444;
-  font-size: 1.1rem;
-  column-count: 2;
-  column-gap: 1.5rem;
-  margin: 0;
-  padding-left: 1rem;
+.bebida-imagen:hover {
+  transform: scale(1.1) rotate(2deg);
+  box-shadow: var(--shadow-heavy);
 }
 
-.bebidas-container .imagenes {
-  flex: 1 1 35%;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
+/* Línea decorativa personalizada */
+.decorative-line {
+  background: linear-gradient(90deg, transparent, var(--primary-red), var(--accent-gold), var(--primary-red), transparent);
+  height: 4px;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgb(220 38 38 / 0.4);
+  position: relative;
 }
 
-.bebidas-container .imagenes img {
-  border-radius: 0.75rem;
-  width: 48%;
-  height: 6rem;
-  object-fit: contain;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
-  transition: box-shadow 0.3s ease;
-}
-.bebidas-container .imagenes img:hover {
-  box-shadow: 0 6px 12px rgb(0 0 0 / 0.2);
+.decorative-line::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: var(--primary-red);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.6);
 }
 
-/* Movil: lista en dos columnas, imágenes abajo lado a lado */
+/* Hero section mejorado */
+.hero-gradient {
+  background: var(--bg-gradient);
+  position: relative;
+}
+
+.hero-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+}
+
+/* Responsive personalizado para móviles */
 @media (max-width: 640px) {
-  .bebidas-container {
-    flex-direction: column;
-    align-items: center;
+  .mobile-menu-toggle {
+    display: block;
   }
-  .bebidas-container ul {
-    column-count: 2;
-    margin-bottom: 1rem;
-    max-width: 90vw;
+  
+  .desktop-menu {
+    display: none;
   }
-  .bebidas-container .imagenes {
-    width: 90vw;
-    flex-direction: row;
-    justify-content: space-around;
+  
+  .mobile-menu {
+    display: none;
   }
-  .bebidas-container .imagenes img {
-    width: 45%;
-    height: 5rem;
+  
+  .mobile-menu.active {
+    display: block;
+  }
+  
+  .plato-card:hover {
+    transform: translateY(-6px) scale(1.01);
+  }
+  
+  .bebida-item:hover {
+    transform: translateY(-3px);
   }
 }
 
-/* Quitar selección texto y cursor pointer */
-.plato, .plato *, .bebidas-container, .bebidas-container * {
-  user-select: none;
-  cursor: default;
+/* Estilos para el formulario personalizado */
+.form-input {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: white;
+}
+
+.form-input:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Botón con efecto glow */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-glow:hover::before {
+  left: 100%;
+}
+
+.btn-glow:hover {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+/* Toast personalizado */
+.toast-notification {
+  animation: slideInRight 0.4s ease-out;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Estilos para el video hero */
+.hero-video {
+  box-shadow: var(--shadow-heavy);
+  border: 4px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Efectos de carga */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Navbar mejorado */
+.navbar-glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Sección de estadísticas */
+.stats-card {
+  background: linear-gradient(135deg, var(--primary-red), var(--secondary-orange));
+  color: white;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-heavy);
+}
+
+/* Testimonios */
+.testimonial-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow-light);
+  border-left: 4px solid var(--primary-red);
+  transition: all 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-8px) rotateX(10deg) scale(1.02);
+  box-shadow: var(--shadow-medium);
+}
+
+.testimonial-card .flex.items-center .w-12 {
+  transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover .flex.items-center .w-12 {
+  transform: scale(1.1);
+}
+
+/* Call to action mejorado */
+.cta-section {
+  background: linear-gradient(135deg, #b91c1c, #ea580c);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(220, 38, 38, 0.2);
+  z-index: 1000;
+}
+
+.scroll-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--primary-red);
+  width: var(--scroll-width, 0%);
+  transition: width 0.1s ease;
+}
+
+/* Carrusel de imágenes */
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-image {
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-image:hover {
+  transform: scale(1.02);
+}
+
+.carousel-btn {
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.carousel-indicator {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.carousel-indicator:hover {
+  transform: scale(1.2);
+}
+
+.carousel-indicator.active {
+  background: white;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Overlay del carrusel */
+.carousel-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 50%, transparent 100%);
+}
+
+/* Animación de entrada para el carrusel */
+@keyframes carouselFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.carousel-fade-in {
+  animation: carouselFadeIn 0.8s ease-out;
+}
+
+/* Efecto de brillo en los botones */
+.carousel-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.carousel-btn:hover::before {
+  left: 100%;
+}
+
+/* Responsive para el carrusel */
+@media (max-width: 640px) {
+  .carousel-btn {
+    padding: 0.5rem;
+  }
+  
+  .carousel-btn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .carousel-indicator {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-red); 
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-red-hover); 
+}
+
+/* Animación de gradiente para texto */
+.text-gradient-animated {
+  background: linear-gradient(90deg, var(--primary-red), var(--accent-gold), var(--primary-red));
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shine 5s linear infinite;
+}
+
+@keyframes text-shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Badge animado en Hero */
+.animated-badge {
+  animation: badge-float 4s ease-in-out infinite;
+}
+
+@keyframes badge-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Footer con efecto Aurora */
+.footer-aurora {
+  position: relative;
+  overflow: hidden;
+  background-color: #111827;
+}
+
+.footer-aurora::before,
+.footer-aurora::after {
+  content: '';
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  background-image: radial-gradient(circle, var(--primary-red) 0%, transparent 60%);
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: aurora-effect 15s linear infinite;
+  pointer-events: none;
+}
+
+.footer-aurora::before {
+  top: -50%;
+  left: -25%;
+}
+
+.footer-aurora::after {
+  top: -25%;
+  right: -50%;
+  animation-delay: -7s;
+}
+
+@keyframes aurora-effect {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.footer-aurora > div {
+  position: relative;
+  z-index: 2;
 }

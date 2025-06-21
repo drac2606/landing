@@ -3,329 +3,708 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fuego y Marea</title>
-
+    <title>Fuego y Marea - Auténtica Comida Marina en La Libertad</title>
+    <meta name="description" content="Descubre los mejores platos marinos en La Libertad, Santa Elena. Ceviche, encocado, parrillada marinera y más. Reserva tu mesa ahora." />
+    
     <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="stylesheet" href="./src/style.css" />
   </head>
-  <body class="bg-white text-gray-800">
+  <body class="bg-gray-50 text-gray-800 font-sans">
 
-    <main>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator"></div>
+
     <!-- Navbar -->
-    <nav class="bg-white shadow sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-        <a href="#inicio" class="flex items-center gap-2">
-          <span class="text-2xl font-bold text-red-600">Fuego y Marea</span>
-          <img src="/public/img/logo.svg" alt="Logo" class="h-8 w-8 object-contain ml-2" />
-        </a>
+    <nav class="navbar-glass shadow-xl sticky top-0 z-50 transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <!-- Logo -->
+          <a href="#inicio" class="flex items-center space-x-3 group">
+            <div class="relative">
+              <img src="/public/img/logo.svg" alt="Logo" class="h-12 w-12 object-contain group-hover:scale-110 transition-transform duration-300" />
+              <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-3xl font-bold text-red-600 font-playfair group-hover:text-red-700 transition-colors duration-200 leading-tight">
+                Fuego y Marea
+              </span>
+              <span class="text-xs text-gray-500 font-medium -mt-1">Restaurante Marino</span>
+            </div>
+          </a>
 
-        <!-- Botón hamburguesa -->
-        <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
+          <!-- Menú desktop -->
+          <ul class="hidden md:flex space-x-8 font-semibold">
+            <li>
+              <a href="#menu" class="text-gray-700 hover:text-red-600 transition-all duration-200 relative group flex items-center">
+                <span class="mr-2">🍽️</span>
+                Menú
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#ubicacion" class="text-gray-700 hover:text-red-600 transition-all duration-200 relative group flex items-center">
+                <span class="mr-2">📍</span>
+                Ubicación
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#contacto" class="text-gray-700 hover:text-red-600 transition-all duration-200 relative group flex items-center">
+                <span class="mr-2">📞</span>
+                Contacto
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#contacto" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-200 shadow-lg hover:shadow-xl">
+                🍽️ Reservar
+              </a>
+            </li>
+          </ul>
 
-        <!-- Enlaces -->
-        <ul id="menu-items" class="hidden md:flex gap-6 font-semibold">
-          <li><a href="#menu" class="hover:text-red-600">Menú</a></li>
-          <li><a href="#ubicacion" class="hover:text-red-600">Ubicación</a></li>
-          <li><a href="#contacto" class="hover:text-red-600">Contacto</a></li>
-        </ul>
-      </div>
+          <!-- Botón hamburguesa -->
+          <button id="menu-toggle" class="md:hidden text-gray-700 hover:text-red-600 focus:outline-none transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
 
         <!-- Menú móvil -->
-        <ul id="mobile-menu" class="md:hidden hidden px-4 pb-4 font-semibold">
-          <li class="py-2"><a href="#menu" class="block hover:text-red-600">Menú</a></li>
-          <li class="py-2"><a href="#ubicacion" class="block hover:text-red-600">Ubicación</a></li>
-          <li class="py-2"><a href="#contacto" class="block hover:text-red-600">Contacto</a></li>
-        </ul>
-    </nav>
-    
-
-    <!-- Hero -->
-    <section id="inicio" class="bg-slate-900 text-white py-6 px-4 text-center">
-      <div class="max-w-5xl mx-auto">
-        <h1 class="text-3xl md:text-4xl font-bold mb-1">Sabor del mar, fuego del corazón</h1>
-        <p class="text-base md:text-lg mb-2">Auténtica comida marina en La Libertad, Santa Elena</p>
-
-      <!-- Video -->
-      <div class="aspect-video w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow mb-4">
-        <video autoplay muted loop playsinline class="w-full h-full object-cover">
-          <source src="/public/video/video.mp4" type="video/mp4">
-          Tu navegador no soporta video.
-        </video>
+        <div id="mobile-menu" class="md:hidden hidden pb-6">
+          <div class="bg-white rounded-2xl shadow-lg p-6 mt-4 border border-gray-100">
+            <ul class="space-y-4 font-semibold">
+              <li>
+                <a href="#menu" class="flex items-center py-3 px-4 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
+                  <span class="mr-3 text-xl">🍽️</span>
+                  Menú
+                </a>
+              </li>
+              <li>
+                <a href="#ubicacion" class="flex items-center py-3 px-4 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
+                  <span class="mr-3 text-xl">📍</span>
+                  Ubicación
+                </a>
+              </li>
+              <li>
+                <a href="#contacto" class="flex items-center py-3 px-4 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200">
+                  <span class="mr-3 text-xl">📞</span>
+                  Contacto
+                </a>
+              </li>
+              <li class="pt-2">
+                <a href="#contacto" class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-full font-semibold transition-all duration-200 shadow-lg">
+                  🍽️ Reservar Mesa
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-gradient text-white py-24 px-4 sm:py-28 lg:py-36 relative overflow-hidden">
+      <!-- Elementos decorativos de fondo -->
+      <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-20 h-20 bg-red-500 rounded-full opacity-20 animate-float"></div>
+        <div class="absolute top-40 right-20 w-16 h-16 bg-orange-400 rounded-full opacity-20 animate-float" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-20 left-20 w-12 h-12 bg-yellow-400 rounded-full opacity-20 animate-float" style="animation-delay: 2s;"></div>
+      </div>
+      
+      <div class="max-w-6xl mx-auto text-center relative z-10">
+        <div class="animate-fade-in-up">
+          <!-- Badge de apertura -->
+          <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-8 border border-white/30 animated-badge">
+            <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+            <span class="text-sm font-medium">Abierto ahora • Lun-Dom 12:00-22:00</span>
+          </div>
+          
+          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 font-playfair leading-tight text-gradient-animated">
+            Sabor del mar, 
+            <span class="text-orange-400">fuego del corazón</span>
+          </h1>
+          <p class="text-xl sm:text-2xl mb-10 text-gray-200 max-w-4xl mx-auto leading-relaxed">
+            Descubre la auténtica cocina marina en La Libertad, Santa Elena. 
+            <span class="text-orange-300 font-semibold">Fresco, delicioso y con el sabor de casa.</span>
+          </p>
+        </div>
+
+        <!-- Carrusel de Imágenes -->
+        <div class="relative w-full max-w-5xl mx-auto mb-12 animate-fade-in-up">
+          <!-- Badge de "Más Vendidos" -->
+          <div class="absolute top-4 left-4 z-20 bg-gradient-to-r from-red-600 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center">
+            <span class="mr-2">🔥</span>
+            Más Vendidos
+          </div>
+          
+          <div class="aspect-video w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 relative">
+            <!-- Imagen actual -->
+            <img id="carousel-image" src="/public/img/ceviche.jpg" alt="Plato destacado" class="w-full h-full object-cover transition-all duration-700 ease-in-out">
+            
+            <!-- Overlay con información -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end">
+              <div class="p-8 text-white">
+                <h3 id="carousel-title" class="text-3xl font-bold mb-2 font-playfair">Ceviche Mixto</h3>
+                <p id="carousel-description" class="text-lg opacity-90">Mariscos frescos marinados en limón</p>
+              </div>
+            </div>
+
+            <!-- Botón izquierdo -->
+            <button id="prev-btn" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/30">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Botón derecho -->
+            <button id="next-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/30">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+
+            <!-- Indicadores -->
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              <div id="indicators" class="flex space-x-2">
+                <!-- Los indicadores se generarán dinámicamente -->
+              </div>
+            </div>
+            
+            <!-- Contador de imágenes -->
+            <div class="absolute bottom-4 right-4 bg-black/30 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+              <span id="image-counter">1</span> / <span id="total-images">8</span>
+            </div>
+          </div>
+        </div>
 
         <!-- Botones -->
-        <div class="flex flex-col sm:flex-row justify-center gap-3">
-          <a href="#ubicacion" class="bg-red-600 hover:bg-red-700 text-white py-2 px-5 rounded-lg font-semibold text-sm">Ver Ubicación</a>
-          <a href="#contacto" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-5 rounded-lg font-semibold text-sm">Realizar Reserva</a>
-        </div>
-      </div>
-    </section>
-
-
-
-    <!-- Menú -->
-    <section id="menu" class="bg-white dark:bg-white-900 py-16">
-      <div class="max-w-screen-xl mx-auto px-4 text-center">
-        <h2 class="text-4xl font-bold text-gray-900 dark:text-gray mb-12">Nuestro Menú</h2>
-        <!-- Entradas -->
-        <div class="mb-12">
-          <h3 class="text-3xl font-bold text-center text-red-600 mb-8">Entradas</h3>
-          <div class="grid grid-cols-3 gap-4 sm:gap-6 md:grid-cols-4 gap-8">
-            <div>
-              <img src="/public/img/ceviche.jpg" alt="Ceviche mixto" class="rounded-lg shadow-md w-full h-56 object-cover">
-              <h4 class="text-base sm:text-lg mt-2 font-bold text-gray-800 dark:text-gray">Ceviche Mixto</h4>
-              <p class="text-sm text-gray-600 dark:text-gray-400">Mariscos frescos marinados en limón, con cebolla, tomate y cilantro.</p>
+        <div class="cta-section text-white py-16 px-4 relative rounded-3xl mx-4 sm:mx-8 lg:mx-16 animate-fade-in-up">
+          <div class="text-center relative z-10">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 font-playfair text-white">
+              ¿Listo para probar la mejor comida marina?
+            </h2>
+            <p class="text-lg sm:text-xl mb-8 text-orange-100">
+              Reserva tu mesa ahora y disfruta de una experiencia gastronómica única
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+              <a href="#ubicacion" class="btn-glow bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white py-5 px-10 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 border border-white/30">
+                📍 Ver Ubicación
+              </a>
+              <a href="#contacto" class="btn-glow bg-white text-red-600 hover:bg-gray-100 py-5 px-10 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1">
+                🍽️ Reservar Mesa
+              </a>
             </div>
-          <div>
-          <img src="/public/img/patacones.jpg" alt="Patacones con queso" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Patacones con Queso</h4>
-          <p class="text-gray-600 dark:text-gray-400">Tostones dorados con queso costeño derretido.</p>
-        </div>
-        <div>
-          <img src="/public/img/canastas.jpg" alt="Canastas de verde con camarón" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Canastas de verde con camarón</h4>
-          <p class="text-gray-600 dark:text-gray-400">Plátano frito cubierto con camarones salteados en ajo y limón.</p>
-        </div>
-        <div>
-          <img src="/public/img/empanadas.jpg" alt="Empanadas de mariscos" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Empanadas de mariscos</h4>
-          <p class="text-gray-600 dark:text-gray-400">Masa crujiente rellena de mariscos mixtos y queso costeño.</p>
-        </div>
-        <div>
-          <img src="/public/img/pulpo.jpg" alt="Pulpo al ajillo" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Pulpo al ajillo</h4>
-          <p class="text-gray-600 dark:text-gray-400">Pulpo tierno con ajo, perejil y aceite de oliva, servido en cazuela.</p>
-        </div>
-        <div>
-          <img src="/public/img/yuca.jpg" alt="Yuca frita con salsa de maní" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Yuca frita con salsa de maní</h4>
-          <p class="text-gray-600 dark:text-gray-400">Bastones de yuca dorada con salsa cremosa de maní.</p>
-        </div>
-        <div>
-          <img src="/public/img/chifles.jpg" alt="Chifles con guacamole" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Chifles con guacamole</h4>
-          <p class="text-gray-600 dark:text-gray-400">Plátano frito acompañado de guacamole con toque de limón.</p>
-        </div>
-        <div>
-          <img src="/public/img/tartar.jpg" alt="Tartar de atún" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Tartar de atún</h4>
-          <p class="text-gray-600 dark:text-gray-400">Dados de atún fresco con salsa de soya, aguacate y cebollín.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Platos fuertes -->
-    <div class="mb-12">
-      <hr class="my-8 border-t-2 border-grey-500 w-full rounded-full shadow-md">
-      <h3 class="text-3xl font-bold text-center text-red-600 mb-8">Platos Fuertes</h3>
-      <div class="grid grid-cols-3 gap-4 sm:gap-6 md:grid-cols-4 gap-8">
-        <div>
-          <img src="/public/img/encocado.jpg" alt="Encocado de Pescado" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Encocado de Pescado</h4>
-          <p class="text-gray-600 dark:text-gray-400">Pescado cocido en leche de coco con pimientos y cebolla.</p>
-        </div>
-        <div>
-          <img src="/public/img/cazuela.jpg" alt="Cazuela de Mariscos" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Cazuela de Mariscos</h4>
-          <p class="text-gray-600 dark:text-gray-400">Mariscos en salsa espesa de maní y verde cocido.</p>
-        </div>
-        <div>
-          <img src="/public/img/langostinos.jpg" alt="Langostinos a la Parrilla" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Langostinos a la Parrilla</h4>
-          <p class="text-gray-600 dark:text-gray-400">Acompañados de yuca frita y ensalada.</p>
-        </div>
-        <div>
-          <img src="/public/img/pasta.jpg" alt="Pasta Marinera" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Pasta Marinera</h4>
-          <p class="text-gray-600 dark:text-gray-400">Tallarines con salsa blanca y mariscos mixtos.</p>
-        </div>
-        <div>
-          <img src="/public/img/bolon.jpg" alt="Bolón con Mariscos" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Bolón con Mariscos</h4>
-          <p class="text-gray-600 dark:text-gray-400">Verde aplastado con queso y una mezcla de mariscos.</p>
-        </div>
-        <div>
-          <img src="/public/img/corvina.jpg" alt="Filete de Corvina Apanado" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Filete de Corvina Apanado</h4>
-          <p class="text-gray-600 dark:text-gray-400">Crujiente por fuera, jugoso por dentro.</p>
-        </div>
-        <div>
-          <img src="/public/img/sopa.jpg" alt="Sopa Marinera" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Sopa Marinera</h4>
-          <p class="text-gray-600 dark:text-gray-400">Caldo espeso con mariscos, plátano verde y yuca.</p>
-        </div>
-        <div>
-          <img src="/public/img/camarones.jpg" alt="Camarones Empanizados" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Camarones Empanizados</h4>
-          <p class="text-gray-600 dark:text-gray-400">Servidos con papas fritas y mayonesa de ajo.</p>
-        </div>
-        <div>
-          <img src="/public/img/pulpoensa.jpg" alt="Ensalada de Pulpo" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Ensalada de Pulpo</h4>
-          <p class="text-gray-600 dark:text-gray-400">Pulpo marinado con limón y especias, servido frío.</p>
-        </div>
-        <div>
-          <img src="/public/img/torre.jpg" alt="Torre de Mariscos" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Torre de Mariscos</h4>
-          <p class="text-gray-600 dark:text-gray-400">Camarones, calamares, conchas y más, servidos en torre con salsa especial.</p>
-        </div>
-        <div>
-          <img src="/public/img/pescado.jpg" alt="Pescado a la brasa" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Pescado a la Brasa</h4>
-          <p class="text-gray-600 dark:text-gray-400">Pescado entero cocinado al carbón, acompañado de arroz y ensalada.</p>
-        </div>
-        <div>
-          <img src="/public/img/ajillo.jpg" alt="Camarones al ajillo" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Camarones al Ajillo</h4>
-          <p class="text-gray-600 dark:text-gray-400">Salteados en mantequilla con ajo, servidos con arroz y tostones.</p>
-        </div>
-        <div>
-          <img src="/public/img/marinero.jpg" alt="Arroz marinero" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Arroz Marinero</h4>
-          <p class="text-gray-600 dark:text-gray-400">Arroz amarillo con mezcla de mariscos y toque de pimiento.</p>
-        </div>
-        <div>
-          <img src="/public/img/parrillada.jpg" alt="Parrillada Marinera" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Parrillada Marinera</h4>
-          <p class="text-gray-600 dark:text-gray-400">Camarones, calamares, pulpo y pescado a la parrilla con papas criollas y ensalada.</p>
-        </div>
-        <div>
-          <img src="/public/img/cangrejo.jpg" alt="Cangrejo al Ajillo" class="rounded-lg shadow-md w-full h-56 object-cover">
-          <h4 class="text-xl mt-2 font-bold text-gray-800 dark:text-gray">Cangrejo al Ajillo</h4>
-          <p class="text-gray-600 dark:text-gray-400">Cangrejo salteado en ajo con un toque de chile, acompañado de arroz y patacones.</p>
-        </div>
-      </div>
-    </div>
-
-  <div class="max-w-7xl mx-auto">
-
-    <hr class="my-8 border-t-2 border-grey-500 w-full rounded-full shadow-md">
-      <h3 class="text-3xl font-bold text-center text-red-600 mb-8">Bebidas</h3>
-
-    <div class="flex flex-col md:flex-row items-start gap-16 max-w-5xl mx-auto">
-      
-      <!-- Lista de bebidas -->
-      <ul class="flex-1 grid grid-cols-3 gap-4 sm:gap-6 select-none">
-        <li class="bg-white rounded-xl shadow-lg p-3 flex flex-col items-center text-center hover:shadow-xl transition cursor-default text-sm sm:text-base">
-          <span class="text-2xl mb-1">🍹</span> Jugo de maracuyá
-        </li>
-        <li class="bg-white rounded-xl shadow-lg p-3 flex flex-col items-center text-center hover:shadow-xl transition cursor-default text-sm sm:text-base">
-          <span class="text-2xl mb-1">🍋</span> Limonada frappé
-        </li>
-        <li class="bg-white rounded-xl shadow-lg p-3 flex flex-col items-center text-center hover:shadow-xl transition cursor-default text-sm sm:text-base">
-          <span class="text-2xl mb-1">💧</span> Agua mineral
-        </li>
-        <li class="bg-white rounded-xl shadow-lg p-3 flex flex-col items-center text-center hover:shadow-xl transition cursor-default text-sm sm:text-base">
-          <span class="text-2xl mb-1">🥤</span> Cola y otras gaseosas
-        </li>
-        <li class="bg-white rounded-xl shadow-lg p-3 flex flex-col items-center text-center hover:shadow-xl transition cursor-default text-sm sm:text-base">
-          <span class="text-2xl mb-1">🍍</span> Piña colada sin alcohol
-        </li>
-        <li class="bg-white rounded-xl shadow-lg p-3 flex flex-col items-center text-center hover:shadow-xl transition cursor-default text-sm sm:text-base">
-          <span class="text-2xl mb-1">🍺</span> Cervezas artesanales y comerciales
-        </li>
-        <li class="bg-white rounded-xl shadow-lg p-3 flex flex-col items-center text-center hover:shadow-xl transition cursor-default text-sm sm:text-base">
-          <span class="text-2xl mb-1">💦</span> Agua saborizada
-        </li>
-        <li class="bg-white rounded-xl shadow-lg p-3 flex flex-col items-center text-center hover:shadow-xl transition cursor-default text-sm sm:text-base">
-          <span class="text-2xl mb-1">🧊</span> Té helado natural
-        </li>
-      </ul>
-
-      <!-- Imágenes al lado derecho -->
-      <div class="flex flex-row md:flex-col gap-8 justify-center md:justify-start flex-none">
-        <img src="/public/img/maracuya.jpg" alt="Jugo de maracuyá" class="rounded-3xl shadow-xl w-48 h-48 object-cover select-none hover:scale-105 transition-transform duration-300">
-        <img src="/public/img/te.jpg" alt="Té helado" class="rounded-3xl shadow-xl w-48 h-48 object-cover select-none hover:scale-105 transition-transform duration-300">
-      </div>
-    </div>
-  </div>
-
-
-
-
-    <!-- Ubicación -->
-    <section id="ubicacion" class="bg-slate-50 py-16 px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-4">¿Dónde estamos?</h2>
-        <p class="mb-4 text-gray-700">Av. Malecón, Santa Elena, Ecuador</p>
-
-        <div class="w-full aspect-video max-w-3xl mx-auto mb-4 rounded overflow-hidden shadow">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d498.3526566533796!2d-80.91030117966758!3d-2.2209383036459482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902e0ec5f68cf57f%3A0xdb804d4178b485d3!2sPatio%20de%20Comida%20Criolla%20El%20Malecon!5e0!3m2!1ses!2sec!4v1750322912812!5m2!1ses!2sec" 
-            class="w-full h-full border-0" 
-            allowfullscreen 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
+          </div>
         </div>
 
-        <p class="mt-4 text-gray-600">Horario: Lun a Dom, 12:00 PM - 10:00 PM</p>
+        <!-- Información adicional -->
+        <div class="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <!-- Calificación -->
+          <div class="group relative">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105">
+              <div class="flex items-center justify-center space-x-3 text-white">
+                <div class="relative">
+                  <span class="text-3xl animate-pulse">⭐</span>
+                  <div class="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+                </div>
+                <div class="text-center">
+                  <p class="font-bold text-2xl mb-1">4.7/5</p>
+                  <p class="text-sm text-gray-200 font-medium">Calificación</p>
+                  <div class="flex justify-center mt-2">
+                    <span class="text-yellow-300 text-xs">★★★★★</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Elemento decorativo -->
+              <div class="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full opacity-60 animate-pulse"></div>
+            </div>
+          </div>
+
+          <!-- Platos -->
+          <div class="group relative">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105">
+              <div class="flex items-center justify-center space-x-3 text-white">
+                <div class="relative">
+                  <span class="text-3xl animate-bounce" style="animation-delay: 0.5s;">🍽️</span>
+                  <div class="absolute -top-1 -right-1 w-3 h-3 bg-red-400 rounded-full animate-ping" style="animation-delay: 1s;"></div>
+                </div>
+                <div class="text-center">
+                  <p class="font-bold text-2xl mb-1">+50</p>
+                  <p class="text-sm text-gray-200 font-medium">Platos</p>
+                  <p class="text-xs text-orange-200 mt-1">Marinos frescos</p>
+                </div>
+              </div>
+              <!-- Elemento decorativo -->
+              <div class="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full opacity-60 animate-pulse" style="animation-delay: 0.5s;"></div>
+            </div>
+          </div>
+
+          <!-- Clientes -->
+          <div class="group relative">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105">
+              <div class="flex items-center justify-center space-x-3 text-white">
+                <div class="relative">
+                  <span class="text-3xl animate-bounce" style="animation-delay: 1s;">👥</span>
+                  <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-ping" style="animation-delay: 1.5s;"></div>
+                </div>
+                <div class="text-center">
+                  <p class="font-bold text-2xl mb-1">+1000</p>
+                  <p class="text-sm text-gray-200 font-medium">Clientes</p>
+                  <p class="text-xs text-green-200 mt-1">Satisfechos</p>
+                </div>
+              </div>
+              <!-- Elemento decorativo -->
+              <div class="absolute -top-2 -right-2 w-4 h-4 bg-green-400 rounded-full opacity-60 animate-pulse" style="animation-delay: 1s;"></div>
+            </div>
+          </div>
         </div>
-    </section>
 
-    <!-- Promociones -->
-    <section class="w-full bg-white py-8 px-4">
-  <div class="max-w-6xl mx-auto">
-    <!-- Título -->
-    <h2 class="text-3xl font-bold text-center mb-4">Promociones y novedades</h2>
-
-    <!-- Contenedor de imágenes en grid responsive -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-0 w-full">
-      <div class="w-full flex justify-center">
-        <img src="/public/img/menu.jpg" alt="Promo 1" class="max-w-full h-auto object-contain">
-      </div>
-      <div class="w-full flex justify-center">
-        <img src="/public/img/2x1.jpg" alt="Promo 2" class="max-w-full h-auto object-contain">
-      </div>
-    </div>
-  </div>
-</section>
-
-    <!-- Formulario -->
-    <section id="contacto" class="bg-white-50 py-16 px-4">
-      <div class="max-w-xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6">Reserva tu mesa</h2>
-        <form class="space-y-4">
-          <input type="text" placeholder="Tu nombre" class="w-full p-3 border rounded font-bold text-white" required />
-          <input type="email" placeholder="Tu correo" class="w-full p-3 border rounded font-bold text-white" required />
-          <select class="w-full font-bold text-white p-3 border rounded" required>
-            <option disabled selected>Número de personas</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3+</option>
-          </select>
-          <input type="date" class="w-full font-bold text-white p-3 border rounded" required />
-          <button type="submit" class="w-48 bg-red-600 font-bold text-white p-3 rounded hover:bg-red-700 block mx-auto">Reservar</button>
-        </form>
+        <!-- Línea decorativa adicional -->
+        <div class="mt-12 flex justify-center">
+          <div class="flex items-center space-x-4">
+            <div class="w-8 h-0.5 bg-gradient-to-r from-transparent to-orange-400"></div>
+            <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+            <div class="w-8 h-0.5 bg-gradient-to-l from-transparent to-orange-400"></div>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- Estadísticas -->
+    <section class="bg-white py-16 px-4">
 
-    <!-- Toast -->
-<div id="toast-interactive" class="hidden fixed right-5 bottom-5 max-w-xs p-4 bg-white rounded-lg shadow-md border dark:bg-gray-800 dark:text-white">
-  <div>
-    <p class="font-bold mb-1">Suscríbete ahora</p>
-    <p class="text-sm mb-3">Obtén beneficios exclusivos por ser cliente.</p>
-    <div class="flex justify-between gap-2">
-      <a href="#" class="bg-blue-600 text-white px-3 py-1 rounded text-sm">Sí, quiero</a>
-      <a href="#" class="bg-gray-200 text-black px-3 py-1 rounded text-sm">No ahora</a>
+    <!-- Menú Section -->
+    <section id="menu" class="bg-gray-50 py-20 px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-5xl font-bold text-gray-900 mb-6 font-playfair">
+            Nuestro Menú
+          </h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Descubre nuestra selección de platos marinos preparados con ingredientes frescos y técnicas tradicionales
+          </p>
+        </div>
+
+        <!-- Entradas -->
+        <div class="mb-20">
+          <div class="bg-white rounded-3xl shadow-xl p-8 mb-12 border-2 border-red-100">
+            <h3 class="text-4xl font-bold text-center text-red-600 mb-12 font-playfair">
+              🍤 Entradas
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$12</div>
+                <img src="/public/img/ceviche.jpg" alt="Ceviche mixto" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Ceviche Mixto</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Mariscos frescos marinados en limón, con cebolla, tomate y cilantro.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$8</div>
+                <img src="/public/img/patacones.jpg" alt="Patacones con queso" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Patacones con Queso</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Tostones dorados con queso costeño derretido.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$15</div>
+                <img src="/public/img/canastas.jpg" alt="Canastas de verde con camarón" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Canastas de verde con camarón</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Plátano frito cubierto con camarones salteados en ajo y limón.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$10</div>
+                <img src="/public/img/empanadas.jpg" alt="Empanadas de mariscos" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Empanadas de mariscos</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Masa crujiente rellena de mariscos mixtos y queso costeño.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$18</div>
+                <img src="/public/img/pulpo.jpg" alt="Pulpo al ajillo" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Pulpo al ajillo</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Pulpo tierno con ajo, perejil y aceite de oliva, servido en cazuela.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$9</div>
+                <img src="/public/img/yuca.jpg" alt="Yuca frita con salsa de maní" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Yuca frita con salsa de maní</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Bastones de yuca dorada con salsa cremosa de maní.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$7</div>
+                <img src="/public/img/chifles.jpg" alt="Chifles con guacamole" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Chifles con guacamole</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Plátano frito acompañado de guacamole con toque de limón.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$22</div>
+                <img src="/public/img/tartar.jpg" alt="Tartar de atún" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Tartar de atún</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Dados de atún fresco con salsa de soya, aguacate y cebollín.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Línea decorativa -->
+        <div class="decorative-line w-32 mx-auto mb-16"></div>
+
+        <!-- Platos Fuertes -->
+        <div class="mb-20">
+          <div class="bg-white rounded-3xl shadow-xl p-8 mb-12 border-2 border-red-100">
+            <h3 class="text-4xl font-bold text-center text-red-600 mb-12 font-playfair">
+              🐟 Platos Fuertes
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$25</div>
+                <img src="/public/img/encocado.jpg" alt="Encocado de Pescado" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Encocado de Pescado</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Pescado cocido en leche de coco con pimientos y cebolla.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$28</div>
+                <img src="/public/img/cazuela.jpg" alt="Cazuela de Mariscos" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Cazuela de Mariscos</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Mariscos en salsa espesa de maní y verde cocido.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$32</div>
+                <img src="/public/img/langostinos.jpg" alt="Langostinos a la Parrilla" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Langostinos a la Parrilla</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Acompañados de yuca frita y ensalada.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$24</div>
+                <img src="/public/img/pasta.jpg" alt="Pasta Marinera" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Pasta Marinera</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Tallarines con salsa blanca y mariscos mixtos.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$20</div>
+                <img src="/public/img/bolon.jpg" alt="Bolón con Mariscos" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Bolón con Mariscos</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Verde aplastado con queso y una mezcla de mariscos.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$26</div>
+                <img src="/public/img/corvina.jpg" alt="Filete de Corvina Apanado" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Filete de Corvina Apanado</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Crujiente por fuera, jugoso por dentro.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$18</div>
+                <img src="/public/img/sopa.jpg" alt="Sopa Marinera" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Sopa Marinera</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Caldo espeso con mariscos, plátano verde y yuca.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$30</div>
+                <img src="/public/img/camarones.jpg" alt="Camarones Empanizados" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Camarones Empanizados</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Servidos con papas fritas y mayonesa de ajo.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$22</div>
+                <img src="/public/img/pulpoensa.jpg" alt="Ensalada de Pulpo" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Ensalada de Pulpo</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Pulpo marinado con limón y especias, servido frío.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$45</div>
+                <img src="/public/img/torre.jpg" alt="Torre de Mariscos" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Torre de Mariscos</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Camarones, calamares, conchas y más, servidos en torre con salsa especial.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$35</div>
+                <img src="/public/img/pescado.jpg" alt="Pescado a la brasa" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Pescado a la Brasa</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Pescado entero cocinado al carbón, acompañado de arroz y ensalada.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$28</div>
+                <img src="/public/img/ajillo.jpg" alt="Camarones al ajillo" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Camarones al Ajillo</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Salteados en mantequilla con ajo, servidos con arroz y tostones.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$16</div>
+                <img src="/public/img/marinero.jpg" alt="Arroz marinero" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Arroz Marinero</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Arroz amarillo con mezcla de mariscos y toque de pimiento.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$38</div>
+                <img src="/public/img/parrillada.jpg" alt="Parrillada Marinera" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Parrillada Marinera</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Camarones, calamares, pulpo y pescado a la parrilla con papas criollas y ensalada.</p>
+              </div>
+              <div class="plato-card bg-gray-50 rounded-2xl shadow-lg p-6 text-center relative">
+                <div class="price-badge">$25</div>
+                <img src="/public/img/cangrejo.jpg" alt="Cangrejo al Ajillo" class="rounded-xl shadow-md w-full h-56 object-cover mb-4">
+                <h4 class="text-xl font-bold text-gray-800 mb-3">Cangrejo al Ajillo</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">Cangrejo salteado en ajo con un toque de chile, acompañado de arroz y patacones.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Línea decorativa -->
+        <div class="decorative-line w-32 mx-auto mb-16"></div>
+
+        <!-- Bebidas -->
+        <div class="mb-16">
+          <div class="bg-white rounded-3xl shadow-xl p-8 border-2 border-red-100">
+            <h3 class="text-4xl font-bold text-center text-red-600 mb-12 font-playfair">
+              🍹 Bebidas Refrescantes
+            </h3>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+              <!-- Lista de bebidas -->
+              <div class="lg:col-span-2">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <div class="bebida-item bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-orange-100">
+                    <span class="text-4xl mb-3">🍹</span>
+                    <span class="text-sm font-medium text-gray-700 mb-1">Jugo de maracuyá</span>
+                    <span class="text-xs text-red-600 font-semibold">$3</span>
+                  </div>
+                  <div class="bebida-item bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-orange-100">
+                    <span class="text-4xl mb-3">🍋</span>
+                    <span class="text-sm font-medium text-gray-700 mb-1">Limonada frappé</span>
+                    <span class="text-xs text-red-600 font-semibold">$2.50</span>
+                  </div>
+                  <div class="bebida-item bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-orange-100">
+                    <span class="text-4xl mb-3">💧</span>
+                    <span class="text-sm font-medium text-gray-700 mb-1">Agua mineral</span>
+                    <span class="text-xs text-red-600 font-semibold">$1.50</span>
+                  </div>
+                  <div class="bebida-item bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-orange-100">
+                    <span class="text-4xl mb-3">🥤</span>
+                    <span class="text-sm font-medium text-gray-700 mb-1">Cola y otras gaseosas</span>
+                    <span class="text-xs text-red-600 font-semibold">$2</span>
+                  </div>
+                  <div class="bebida-item bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-orange-100">
+                    <span class="text-4xl mb-3">🍍</span>
+                    <span class="text-sm font-medium text-gray-700 mb-1">Piña colada sin alcohol</span>
+                    <span class="text-xs text-red-600 font-semibold">$4</span>
+                  </div>
+                  <div class="bebida-item bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-orange-100">
+                    <span class="text-4xl mb-3">🍺</span>
+                    <span class="text-sm font-medium text-gray-700 mb-1">Cervezas artesanales y comerciales</span>
+                    <span class="text-xs text-red-600 font-semibold">$3-5</span>
+                  </div>
+                  <div class="bebida-item bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-orange-100">
+                    <span class="text-4xl mb-3">💦</span>
+                    <span class="text-sm font-medium text-gray-700 mb-1">Agua saborizada</span>
+                    <span class="text-xs text-red-600 font-semibold">$2.50</span>
+                  </div>
+                  <div class="bebida-item bg-gradient-to-br from-orange-50 to-red-50 rounded-xl shadow-lg p-6 flex flex-col items-center text-center border border-orange-100">
+                    <span class="text-4xl mb-3">🧊</span>
+                    <span class="text-sm font-medium text-gray-700 mb-1">Té helado natural</span>
+                    <span class="text-xs text-red-600 font-semibold">$2</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Imágenes de bebidas -->
+              <div class="lg:col-span-1">
+                <div class="space-y-6">
+                  <div class="text-center">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Bebidas Destacadas</h4>
+                    <img src="/public/img/maracuya.jpg" alt="Jugo de maracuyá" class="bebida-imagen rounded-2xl shadow-xl w-full h-48 object-cover mb-3">
+                    <p class="text-sm text-gray-600">Jugo de maracuyá fresco</p>
+                  </div>
+                  <div class="text-center">
+                    <img src="/public/img/te.jpg" alt="Té helado" class="bebida-imagen rounded-2xl shadow-xl w-full h-48 object-cover mb-3">
+                    <p class="text-sm text-gray-600">Té helado natural</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="bg-white py-20 px-4">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-16 font-playfair">
+          Lo que dicen nuestros clientes
+        </h2>
+        <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Los testimonios se cargarán aquí dinámicamente -->
+          <p class="text-center col-span-full text-gray-500">Cargando testimonios...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ubicación Section -->
+    <section id="ubicacion" class="bg-gray-50 py-20 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-6 font-playfair">¿Dónde estamos?</h2>
+          <p class="text-xl text-gray-600 mb-8">Encuéntranos en el corazón de La Libertad, Santa Elena</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div class="animate-fade-in-left">
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
+              <h3 class="text-2xl font-bold text-gray-800 mb-6">📍 Ubicación</h3>
+              <div class="space-y-4">
+                <div class="flex items-start space-x-4">
+                  <div class="text-red-600 text-xl">📍</div>
+                  <div>
+                    <p class="font-semibold text-gray-800">Av. Malecón, Santa Elena, Ecuador</p>
+                    <p class="text-gray-600">Frente al mar, en el Patio de Comida Criolla El Malecón</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                  <div class="text-red-600 text-xl">🕒</div>
+                  <div>
+                    <p class="font-semibold text-gray-800">Horario de Atención</p>
+                    <p class="text-gray-600">Lunes a Domingo: 12:00 PM - 10:00 PM</p>
+                  </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                  <div class="text-red-600 text-xl">📞</div>
+                  <div>
+                    <p class="font-semibold text-gray-800">Contacto</p>
+                    <p class="text-gray-600">+593 98 123 4567</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="animate-fade-in-right">
+            <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d498.3526566533796!2d-80.91030117966758!3d-2.2209383036459482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902e0ec5f68cf57f%3A0xdb804d4178b485d3!2sPatio%20de%20Comida%20Criolla%20El%20Malecon!5e0!3m2!1ses!2sec!4v1750322912812!5m2!1ses!2sec" 
+                class="w-full h-full border-0" 
+                allowfullscreen 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Promociones Section -->
+    <section class="bg-white py-20 px-4">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-16 font-playfair">
+          🎉 Promociones Especiales
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div class="text-center">
+            <img src="/public/img/menu.jpg" alt="Promo 1" class="max-w-full h-auto object-contain rounded-2xl shadow-xl mb-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Menú Ejecutivo</h3>
+            <p class="text-gray-600">Plato principal + bebida + postre por solo $15</p>
+          </div>
+          <div class="text-center">
+            <img src="/public/img/2x1.jpg" alt="Promo 2" class="max-w-full h-auto object-contain rounded-2xl shadow-xl mb-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">2x1 en Ceviches</h3>
+            <p class="text-gray-600">Todos los martes y jueves de 2:00 PM a 5:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="bg-gray-50 py-20 px-4">
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-900 mb-6 font-playfair">Reserva tu mesa</h2>
+          <p class="text-xl text-gray-600">Asegura tu lugar y disfruta de la mejor comida marina</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <input name="name" type="text" placeholder="Tu nombre completo" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+              <input name="email" type="email" placeholder="Tu correo electrónico" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <input name="phone" type="tel" placeholder="Tu teléfono" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+              <select name="people" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                <option value="" disabled selected>Número de personas</option>
+                <option value="1">1 persona</option>
+                <option value="2">2 personas</option>
+                <option value="3-4">3-4 personas</option>
+                <option value="5+">5+ personas</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <input name="date" type="date" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+              <select name="time" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                <option value="" disabled selected>Hora de reserva</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="1:00 PM">1:00 PM</option>
+                <option value="2:00 PM">2:00 PM</option>
+                <option value="6:00 PM">6:00 PM</option>
+                <option value="7:00 PM">7:00 PM</option>
+                <option value="8:00 PM">8:00 PM</option>
+                <option value="9:00 PM">9:00 PM</option>
+              </select>
+            </div>
+            <textarea name="comments" placeholder="Comentarios especiales (opcional)" rows="4" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+            <button type="submit" class="btn-glow w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl text-lg animated-button">
+              🍽️ Confirmar Reserva
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="toast-interactive" class="hidden fixed right-5 bottom-5 max-w-sm p-6 bg-white rounded-2xl shadow-2xl border dark:bg-gray-800 dark:text-white toast-notification z-50">
+      <div>
+        <div class="flex items-center mb-3">
+          <div class="text-2xl mr-3">🎉</div>
+          <p class="font-bold text-lg">¡Oferta especial!</p>
+        </div>
+        <p class="text-sm mb-4 text-gray-600">Suscríbete y obtén 10% de descuento en tu primera visita.</p>
+        <div class="flex justify-between gap-3">
+          <a href="#contacto" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700 transition-colors duration-200">¡Quiero!</a>
+          <button class="bg-gray-200 text-black px-4 py-2 rounded-lg text-sm hover:bg-gray-300 transition-colors duration-200">No ahora</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white text-center py-6">
-      <p>&copy; 2025 Fuego y Marea. Todos los derechos reservados.</p>
+    <footer class="bg-gray-900 text-white py-16 footer-aurora">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <a href="#inicio" class="inline-block mb-8">
+          <img src="/public/img/logo.svg" alt="Logo" class="h-16 w-16 mx-auto hover:scale-110 transition-transform duration-300" />
+        </a>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-left">
+          <div>
+            <h3 class="text-2xl font-bold text-red-400 mb-4 font-playfair">Fuego y Marea</h3>
+            <p class="text-gray-300">Auténtica comida marina en La Libertad, Santa Elena. Fresco, delicioso y con el sabor de casa.</p>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Horarios</h4>
+            <p class="text-gray-300">Lunes a Domingo</p>
+            <p class="text-gray-300">12:00 PM - 10:00 PM</p>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+            <p class="text-gray-300">Av. Malecón, Santa Elena</p>
+            <p class="text-gray-300">+593 98 123 4567</p>
+          </div>
+        </div>
+        <div class="border-t border-gray-700 pt-8">
+          <p>&copy; ${new Date().getFullYear()} Fuego y Marea. Todos los derechos reservados.</p>
+        </div>
+      </div>
     </footer>
-</main>
-    <script type="module" src="./src/main.js"></script>.
+
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
