@@ -628,15 +628,92 @@ body {
 
 /* Estilos para las tarjetas de reservas */
 .reservation-card {
-  @apply bg-white rounded-lg shadow-lg p-6 border border-gray-200 hover:shadow-xl transition-all duration-300;
+  background: linear-gradient(135deg, #fff7ed 0%, #fef6fb 100%);
+  border-radius: 1.25rem;
+  box-shadow: 0 6px 32px 0 rgba(220,38,38,0.08), 0 1.5px 6px 0 rgba(0,0,0,0.04);
+  border: 2px solid #fde68a;
+  padding: 2rem;
+  transition: box-shadow 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.reservation-card:hover {
+  box-shadow: 0 12px 40px 0 rgba(220,38,38,0.18), 0 4px 16px 0 rgba(0,0,0,0.08);
+  transform: translateY(-4px) scale(1.025);
+  border-color: #f59e42;
 }
 
 .reservation-avatar {
-  @apply w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg;
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(135deg, #f59e42 0%, #f94616 100%);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 8px #f59e4280;
+  animation: avatarPulse 2s infinite alternate;
+}
+
+@keyframes avatarPulse {
+  0% { box-shadow: 0 2px 8px #f59e4280; }
+  100% { box-shadow: 0 4px 16px #f9461680; }
 }
 
 .confirmation-badge {
-  @apply inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e0f7fa;
+  color: #059669;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.25rem 1rem;
+  box-shadow: 0 1px 4px #05966922;
+  margin-top: 0.5rem;
+}
+
+.confirmation-badge .icon {
+  font-size: 1.1rem;
+  margin-right: 0.25rem;
+}
+
+.reservation-card .icon {
+  font-size: 1.3rem;
+  color: #f59e42;
+  margin-right: 0.5rem;
+}
+
+.reservation-card .icon.phone { color: #f94616; }
+.reservation-card .icon.comment { color: #059669; }
+
+.reservation-separator {
+  height: 1px;
+  background: linear-gradient(90deg, #fde68a 0%, #f59e42 50%, #fde68a 100%);
+  margin: 1.5rem 0;
+  border: none;
+  opacity: 0.5;
+}
+
+@media (max-width: 640px) {
+  .reservation-card {
+    padding: 1.2rem;
+    font-size: 0.97rem;
+  }
+  .reservation-avatar {
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 1.1rem;
+  }
 }
 
 .stats-card-reservation {

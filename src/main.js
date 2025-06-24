@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initializeReservationsDisplay();
   initializeRatingForm();
   initializeTestimonials();
+  initializeOpenStatusBadge();
   const yearSpan = document.getElementById('footer-year');
   if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 });
@@ -578,21 +579,14 @@ function updateReservationsDisplay(reservations) {
   const todayCounter = document.getElementById('today-reservations');
   const weekCounter = document.getElementById('week-reservations');
   const avgPartySize = document.getElementById('avg-party-size');
-  
   if (!container) return;
-  
-  // Verificar si es una nueva reserva (comparar con el estado anterior)
   const currentCount = parseInt(counter?.textContent) || 0;
   const newCount = reservations.length;
   const isNewReservation = newCount > currentCount;
-  
-  // Actualizar contador total con animación
   if (counter) {
     if (currentCount !== newCount) {
       counter.textContent = newCount;
       counter.classList.add('count-animation');
-      
-      // Efecto especial para nueva reserva
       if (isNewReservation) {
         counter.style.transform = 'scale(1.2)';
         counter.style.color = '#10b981';
@@ -601,31 +595,15 @@ function updateReservationsDisplay(reservations) {
           counter.style.color = '';
         }, 1000);
       }
-      
       setTimeout(() => counter.classList.remove('count-animation'), 500);
     }
   }
-  
-  // Calcular estadísticas
   const today = new Date().toDateString();
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-  
-  const todayReservations = reservations.filter(r => 
-    new Date(r.createdAt).toDateString() === today
-  );
-  
-  const weekReservations = reservations.filter(r => 
-    new Date(r.createdAt) >= weekAgo
-  );
-  
-  const totalPeople = reservations.reduce((sum, r) => {
-    const people = parseInt(r.people) || 0;
-    return sum + people;
-  }, 0);
-  
+  const todayReservations = reservations.filter(r => new Date(r.createdAt).toDateString() === today);
+  const weekReservations = reservations.filter(r => new Date(r.createdAt) >= weekAgo);
+  const totalPeople = reservations.reduce((sum, r) => { const people = parseInt(r.people) || 0; return sum + people; }, 0);
   const averagePartySize = reservations.length > 0 ? Math.round(totalPeople / reservations.length) : 0;
-  
-  // Actualizar contadores con animación
   if (todayCounter) {
     const currentToday = parseInt(todayCounter.textContent) || 0;
     if (currentToday !== todayReservations.length) {
@@ -634,7 +612,6 @@ function updateReservationsDisplay(reservations) {
       setTimeout(() => todayCounter.classList.remove('count-animation'), 500);
     }
   }
-  
   if (weekCounter) {
     const currentWeek = parseInt(weekCounter.textContent) || 0;
     if (currentWeek !== weekReservations.length) {
@@ -643,7 +620,6 @@ function updateReservationsDisplay(reservations) {
       setTimeout(() => weekCounter.classList.remove('count-animation'), 500);
     }
   }
-  
   if (avgPartySize) {
     const currentAvg = parseInt(avgPartySize.textContent) || 0;
     if (currentAvg !== averagePartySize) {
@@ -652,10 +628,7 @@ function updateReservationsDisplay(reservations) {
       setTimeout(() => avgPartySize.classList.remove('count-animation'), 500);
     }
   }
-  
-  // Mostrar reservas recientes (máximo 6)
   const recentReservations = reservations.slice(0, 6);
-  
   if (recentReservations.length === 0) {
     container.innerHTML = `
       <div class="col-span-full text-center py-12">
@@ -668,33 +641,18 @@ function updateReservationsDisplay(reservations) {
     `;
     return;
   }
-  
-  container.innerHTML = recentReservations.map((reservation, index) => {
+  container.innerHTML = recentReservations.map((reservation) => {
     const date = new Date(reservation.createdAt);
-    const formattedDate = date.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-    const formattedTime = date.toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-    
-    // Efecto especial para la reserva más reciente si es nueva
-    const isNewest = index === 0;
-    const animationClass = isNewest && isNewReservation ? 'animate-fade-in-up border-green-300' : 'animate-fade-in-up';
-    
+    const formattedDate = date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const formattedTime = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     return `
-      <div class="reservation-card ${animationClass}" ${isNewest && isNewReservation ? 'style="border: 2px solid #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);"' : ''}>
+      <div class="reservation-card animate-fade-in-up">
         <div class="flex items-center justify-between mb-4">
           <div class="flex items-center space-x-3">
-            <div class="reservation-avatar">
-              ${reservation.name.charAt(0).toUpperCase()}
-            </div>
+            <div class="reservation-avatar">${reservation.name.charAt(0).toUpperCase()}</div>
             <div>
-              <h3 class="font-semibold text-gray-800">${reservation.name}</h3>
-              <p class="text-sm text-gray-500">${reservation.people} personas</p>
+              <h3 class="font-semibold text-gray-800 text-lg">${reservation.name}</h3>
+              <p class="text-xs text-gray-500">${reservation.people} personas</p>
             </div>
           </div>
           <div class="text-right">
@@ -702,28 +660,24 @@ function updateReservationsDisplay(reservations) {
             <div class="text-xs text-gray-400">${formattedTime}</div>
           </div>
         </div>
-        
-        <div class="space-y-2 text-sm">
+        <div class="space-y-2 text-sm mt-2">
           <div class="flex items-center space-x-2">
-            <span class="text-gray-500">📅</span>
+            <span class="icon">📅</span>
             <span class="text-gray-700">${reservation.date} a las ${reservation.time}</span>
           </div>
           <div class="flex items-center space-x-2">
-            <span class="text-gray-500">📞</span>
+            <span class="icon phone">📞</span>
             <span class="text-gray-700">${reservation.phone}</span>
           </div>
           ${reservation.comments ? `
             <div class="flex items-start space-x-2">
-              <span class="text-gray-500 mt-1">💬</span>
+              <span class="icon comment">💬</span>
               <span class="text-gray-700 text-xs">${reservation.comments}</span>
             </div>
           ` : ''}
         </div>
-        
         <div class="mt-4 pt-3 border-t border-gray-100">
-          <span class="confirmation-badge">
-            Confirmada
-          </span>
+          <span class="confirmation-badge"><span class="icon">✅</span>Confirmada</span>
         </div>
       </div>
     `;
@@ -839,4 +793,31 @@ function renderStarIcons(rating) {
     stars += i <= rating ? '★' : '☆';
   }
   return stars;
+}
+
+// Badge dinámico de abierto/cerrado
+function initializeOpenStatusBadge() {
+  const badge = document.getElementById('open-status-badge');
+  const dot = document.getElementById('open-status-dot');
+  const text = document.getElementById('open-status-text');
+  if (!badge || !dot || !text) return;
+
+  function updateStatus() {
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    // Abierto de 12:00 a 22:00 todos los días
+    const isOpen = (hour > 12 && hour < 22) || (hour === 12 && minute >= 0) || (hour === 22 && minute === 0);
+    if (isOpen) {
+      dot.classList.remove('bg-red-400');
+      dot.classList.add('bg-green-400');
+      text.textContent = 'Abierto ahora • Lun-Dom 12:00-22:00';
+    } else {
+      dot.classList.remove('bg-green-400');
+      dot.classList.add('bg-red-400');
+      text.textContent = 'Cerrado ahora • Lun-Dom 12:00-22:00';
+    }
+  }
+  updateStatus();
+  setInterval(updateStatus, 60000); // Actualiza cada minuto
 }

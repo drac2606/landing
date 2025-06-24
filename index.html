@@ -117,9 +117,9 @@
       <div class="max-w-6xl mx-auto text-center relative z-10">
         <div class="animate-fade-in-up">
           <!-- Badge de apertura -->
-          <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-8 border border-white/30 animated-badge">
-            <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-            <span class="text-sm font-medium">Abierto ahora • Lun-Dom 12:00-22:00</span>
+          <div id="open-status-badge" class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 mb-8 border border-white/30 animated-badge">
+            <span id="open-status-dot" class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+            <span id="open-status-text" class="text-sm font-medium">Abierto ahora • Lun-Dom 12:00-22:00</span>
           </div>
           
           <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 font-playfair leading-tight text-gradient-animated">
@@ -592,7 +592,7 @@
             <div class="realtime-indicator"></div>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="recent-reservations">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch" id="recent-reservations">
           <div class="col-span-full text-center py-12">
             <div class="inline-flex items-center space-x-2 text-gray-500">
               <div class="w-6 h-6 border-2 border-gray-300 border-t-red-600 rounded-full animate-spin"></div>
