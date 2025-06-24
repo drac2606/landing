@@ -1,4 +1,20 @@
 import './style.css'
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import { getDatabase, ref, set, push, get, onValue } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
 
 // Funcionalidad principal cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,7 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
   initializeScrollIndicator();
   initializeHoverEffects();
   initializeImageCarousel();
+  initializeReservationsDisplay();
+  initializeRatingForm();
   initializeTestimonials();
+  const yearSpan = document.getElementById('footer-year');
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 });
 
 // Funcionalidad del menú móvil
@@ -109,7 +129,7 @@ function initializeToast() {
   }
 }
 
-// Formulario de reserva (Modificado para fetch POST y para interactuar con los datos)
+// Formulario de reserva (Modificado para usar POST/GET con Firebase)
 function initializeForm() {
   const reservationForm = document.querySelector('#contacto form');
   if (reservationForm) {
@@ -128,35 +148,54 @@ function initializeForm() {
         people: formData.get('people'),
         date: formData.get('date'),
         time: formData.get('time'),
-        comments: formData.get('comments'),
+        comments: formData.get('comments') || ''
       };
+      
+      // Validar campos requeridos
+      if (!data.name || !data.email || !data.phone || !data.people || !data.date || !data.time) {
+        showNotification('Por favor, completa todos los campos requeridos.', 'error');
+        return;
+      }
       
       submitButton.innerHTML = '🔄 Enviando...';
       submitButton.disabled = true;
 
       try {
-        // fetch - HTTP POST (Requisito de la rúbrica)
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
-        });
-
-        if (!response.ok) throw new Error('Error en la reserva');
-
-        await response.json(); // Simula recibir la confirmación del servidor
-
+        // POST - Guardar reserva en Firebase
+        const reservationsRef = ref(database, 'reservations');
+        const newReservationRef = push(reservationsRef);
+        const reservationData = {
+          ...data,
+          id: newReservationRef.key,
+          createdAt: new Date().toISOString(),
+          status: 'pending'
+        };
+        
+        await set(newReservationRef, reservationData);
+        
+        // GET - Obtener todas las reservas actualizadas
+        const getReservationsRef = ref(database, 'reservations');
+        const snapshot = await get(getReservationsRef);
+        
+        if (snapshot.exists()) {
+          const reservations = snapshot.val();
+          const reservationsArray = Object.values(reservations).sort((a, b) => 
+            new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          
+          // Actualizar la UI con los datos obtenidos
+          updateReservationsDisplay(reservationsArray);
+        }
+        
         // Interactuar con los datos ingresados (Requisito de la rúbrica)
-        const confirmationMessage = `¡Gracias, ${data.name}! Tu reserva para ${data.people} el ${data.date} ha sido recibida.`;
+        const confirmationMessage = `¡Gracias, ${data.name}! Tu reserva para ${data.people} personas el ${data.date} ha sido confirmada.`;
         showNotification(confirmationMessage, 'success');
         
         this.reset();
         
       } catch (error) {
         showNotification('Hubo un error al enviar tu reserva. Por favor, intenta de nuevo.', 'error');
-        console.error(error);
+        console.error('Error submitting form:', error);
       } finally {
         submitButton.innerHTML = originalText;
         submitButton.disabled = false;
@@ -319,43 +358,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Cargar testimonios dinámicamente (fetch - HTTP GET)
-async function initializeTestimonials() {
-  const testimonialsContainer = document.getElementById('testimonials-container');
-  if (!testimonialsContainer) return;
-
-  try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users?_limit=3');
-    if (!response.ok) throw new Error('Error al cargar los testimonios');
-    
-    const users = await response.json();
-    
-    testimonialsContainer.innerHTML = ''; // Limpiar mensaje de "cargando"
-    
-    users.forEach(user => {
-      const testimonialCard = `
-        <div class="testimonial-card animate-fade-in-up">
-          <div class="flex items-center mb-4">
-            <div class="text-yellow-400 text-2xl">⭐⭐⭐⭐⭐</div>
-          </div>
-          <p class="text-gray-600 mb-4">"${user.company.catchPhrase}. ¡Una experiencia increíble y un servicio excepcional!"</p>
-          <div class="flex items-center">
-            <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white font-bold mr-3">${user.name.charAt(0)}</div>
-            <div>
-              <p class="font-semibold text-gray-800">${user.name}</p>
-              <p class="text-sm text-gray-500">Cliente Satisfecho</p>
-            </div>
-          </div>
-        </div>
-      `;
-      testimonialsContainer.insertAdjacentHTML('beforeend', testimonialCard);
-    });
-  } catch (error) {
-    testimonialsContainer.innerHTML = '<p class="text-center col-span-full text-red-500">No se pudieron cargar los testimonios en este momento.</p>';
-    console.error(error);
-  }
-}
-
 // Carrusel de imágenes
 function initializeImageCarousel() {
   const carouselData = [
@@ -510,4 +512,331 @@ function initializeImageCarousel() {
   // Inicializar carrusel
   createIndicators();
   updateCarousel();
+}
+
+// Inicializar display de reservas
+function initializeReservationsDisplay() {
+  try {
+    // Mostrar estado de carga
+    const container = document.getElementById('recent-reservations');
+    if (container) {
+      container.innerHTML = `
+        <div class="col-span-full text-center py-12">
+          <div class="inline-flex items-center space-x-2 text-gray-500">
+            <div class="w-6 h-6 border-2 border-gray-300 border-t-red-600 rounded-full animate-spin"></div>
+            <span>Conectando en tiempo real...</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // Listener en tiempo real para reservas
+    const reservationsRef = ref(database, 'reservations');
+    onValue(reservationsRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const reservations = snapshot.val();
+        const reservationsArray = Object.values(reservations).sort((a, b) => 
+          new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        updateReservationsDisplay(reservationsArray);
+        
+        // Mostrar notificación de conexión exitosa solo la primera vez
+        if (reservationsArray.length > 0) {
+          console.log('✅ Sistema de reservas en tiempo real conectado');
+        }
+      } else {
+        updateReservationsDisplay([]);
+        console.log('✅ Sistema de reservas en tiempo real conectado - No hay reservas aún');
+      }
+    }, (error) => {
+      console.error('Error listening to reservations:', error);
+      updateReservationsDisplay([]);
+      
+      // Mostrar error en la UI
+      if (container) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-12">
+            <div class="text-red-500">
+              <div class="text-4xl mb-4">⚠️</div>
+              <p class="text-lg mb-2">Error de conexión</p>
+              <p class="text-sm text-gray-500">No se pudo conectar al sistema de reservas</p>
+            </div>
+          </div>
+        `;
+      }
+    });
+  } catch (error) {
+    console.error('Error setting up reservation listener:', error);
+    updateReservationsDisplay([]);
+  }
+}
+
+// Actualizar display de reservas
+function updateReservationsDisplay(reservations) {
+  const container = document.getElementById('recent-reservations');
+  const counter = document.getElementById('reservation-counter');
+  const todayCounter = document.getElementById('today-reservations');
+  const weekCounter = document.getElementById('week-reservations');
+  const avgPartySize = document.getElementById('avg-party-size');
+  
+  if (!container) return;
+  
+  // Verificar si es una nueva reserva (comparar con el estado anterior)
+  const currentCount = parseInt(counter?.textContent) || 0;
+  const newCount = reservations.length;
+  const isNewReservation = newCount > currentCount;
+  
+  // Actualizar contador total con animación
+  if (counter) {
+    if (currentCount !== newCount) {
+      counter.textContent = newCount;
+      counter.classList.add('count-animation');
+      
+      // Efecto especial para nueva reserva
+      if (isNewReservation) {
+        counter.style.transform = 'scale(1.2)';
+        counter.style.color = '#10b981';
+        setTimeout(() => {
+          counter.style.transform = 'scale(1)';
+          counter.style.color = '';
+        }, 1000);
+      }
+      
+      setTimeout(() => counter.classList.remove('count-animation'), 500);
+    }
+  }
+  
+  // Calcular estadísticas
+  const today = new Date().toDateString();
+  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  
+  const todayReservations = reservations.filter(r => 
+    new Date(r.createdAt).toDateString() === today
+  );
+  
+  const weekReservations = reservations.filter(r => 
+    new Date(r.createdAt) >= weekAgo
+  );
+  
+  const totalPeople = reservations.reduce((sum, r) => {
+    const people = parseInt(r.people) || 0;
+    return sum + people;
+  }, 0);
+  
+  const averagePartySize = reservations.length > 0 ? Math.round(totalPeople / reservations.length) : 0;
+  
+  // Actualizar contadores con animación
+  if (todayCounter) {
+    const currentToday = parseInt(todayCounter.textContent) || 0;
+    if (currentToday !== todayReservations.length) {
+      todayCounter.textContent = todayReservations.length;
+      todayCounter.classList.add('count-animation');
+      setTimeout(() => todayCounter.classList.remove('count-animation'), 500);
+    }
+  }
+  
+  if (weekCounter) {
+    const currentWeek = parseInt(weekCounter.textContent) || 0;
+    if (currentWeek !== weekReservations.length) {
+      weekCounter.textContent = weekReservations.length;
+      weekCounter.classList.add('count-animation');
+      setTimeout(() => weekCounter.classList.remove('count-animation'), 500);
+    }
+  }
+  
+  if (avgPartySize) {
+    const currentAvg = parseInt(avgPartySize.textContent) || 0;
+    if (currentAvg !== averagePartySize) {
+      avgPartySize.textContent = averagePartySize;
+      avgPartySize.classList.add('count-animation');
+      setTimeout(() => avgPartySize.classList.remove('count-animation'), 500);
+    }
+  }
+  
+  // Mostrar reservas recientes (máximo 6)
+  const recentReservations = reservations.slice(0, 6);
+  
+  if (recentReservations.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full text-center py-12">
+        <div class="text-gray-500">
+          <div class="text-6xl mb-4">🍽️</div>
+          <p class="text-xl mb-2">Aún no hay reservas</p>
+          <p class="text-gray-400">¡Sé el primero en reservar!</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = recentReservations.map((reservation, index) => {
+    const date = new Date(reservation.createdAt);
+    const formattedDate = date.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    const formattedTime = date.toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    // Efecto especial para la reserva más reciente si es nueva
+    const isNewest = index === 0;
+    const animationClass = isNewest && isNewReservation ? 'animate-fade-in-up border-green-300' : 'animate-fade-in-up';
+    
+    return `
+      <div class="reservation-card ${animationClass}" ${isNewest && isNewReservation ? 'style="border: 2px solid #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);"' : ''}>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <div class="reservation-avatar">
+              ${reservation.name.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800">${reservation.name}</h3>
+              <p class="text-sm text-gray-500">${reservation.people} personas</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs text-gray-400">${formattedDate}</div>
+            <div class="text-xs text-gray-400">${formattedTime}</div>
+          </div>
+        </div>
+        
+        <div class="space-y-2 text-sm">
+          <div class="flex items-center space-x-2">
+            <span class="text-gray-500">📅</span>
+            <span class="text-gray-700">${reservation.date} a las ${reservation.time}</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-gray-500">📞</span>
+            <span class="text-gray-700">${reservation.phone}</span>
+          </div>
+          ${reservation.comments ? `
+            <div class="flex items-start space-x-2">
+              <span class="text-gray-500 mt-1">💬</span>
+              <span class="text-gray-700 text-xs">${reservation.comments}</span>
+            </div>
+          ` : ''}
+        </div>
+        
+        <div class="mt-4 pt-3 border-t border-gray-100">
+          <span class="confirmation-badge">
+            Confirmada
+          </span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// --- Calificaciones y Testimonios ---
+
+// Inicializar formulario de calificación
+function initializeRatingForm() {
+  const form = document.getElementById('rating-form');
+  const starRating = document.getElementById('star-rating');
+  if (!form || !starRating) return;
+  let currentRating = 0;
+
+  // Renderizar estrellas
+  function renderStars() {
+    starRating.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('span');
+      star.className = 'text-4xl cursor-pointer select-none transition-all duration-150';
+      star.innerHTML = '★';
+      // Color solo por selección
+      star.style.color = i <= currentRating ? '#ffb300' : '#e5e7eb'; // dorado fuerte y gris claro
+      // Efecto visual al pasar el mouse (escala/sombra, no color)
+      star.addEventListener('mouseenter', () => {
+        star.style.transform = 'scale(1.2)';
+        star.style.textShadow = '0 2px 8px #ffb30055';
+      });
+      star.addEventListener('mouseleave', () => {
+        star.style.transform = 'scale(1)';
+        star.style.textShadow = 'none';
+      });
+      star.addEventListener('click', () => {
+        currentRating = i;
+        renderStars();
+      });
+      starRating.appendChild(star);
+    }
+  }
+  renderStars();
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const name = form.elements['name'].value.trim();
+    const comment = form.elements['comment'].value.trim();
+    const rating = currentRating;
+    // Validación robusta
+    if (!name || !comment || rating < 1 || rating > 5) {
+      showNotification('Por favor, ingresa tu nombre, comentario y selecciona una calificación con estrellas antes de enviar. ¡Tu opinión es muy importante para nosotros!', 'error');
+      return;
+    }
+    try {
+      const testimonialsRef = ref(database, 'testimonials');
+      const newTestimonialRef = push(testimonialsRef);
+      const testimonialData = {
+        name,
+        comment,
+        rating,
+        createdAt: new Date().toISOString()
+      };
+      await set(newTestimonialRef, testimonialData);
+      showNotification('¡Gracias por tu opinión! Tu calificación se ha registrado correctamente.', 'success');
+      form.reset();
+      currentRating = 0;
+      renderStars();
+    } catch (error) {
+      showNotification('Ocurrió un error al enviar tu calificación. Por favor, inténtalo de nuevo.', 'error');
+      console.error(error);
+    }
+  });
+}
+
+// Cargar y mostrar testimonios en tiempo real (GET)
+function initializeTestimonials() {
+  const testimonialsContainer = document.getElementById('testimonials-container');
+  if (!testimonialsContainer) return;
+  testimonialsContainer.innerHTML = '<p class="text-center col-span-full text-gray-500">Cargando testimonios...</p>';
+  try {
+    const testimonialsRef = ref(database, 'testimonials');
+    onValue(testimonialsRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const testimonials = Object.values(snapshot.val()).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        testimonialsContainer.innerHTML = testimonials.map(t => `
+          <div class="testimonial-card animate-fade-in-up">
+            <div class="flex items-center mb-4">
+              <div class="text-yellow-400 text-2xl">${renderStarIcons(t.rating)}</div>
+            </div>
+            <p class="text-gray-600 mb-4">"${t.comment}"</p>
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white font-bold mr-3">${t.name.charAt(0)}</div>
+              <div>
+                <p class="font-semibold text-gray-800">${t.name}</p>
+                <p class="text-sm text-gray-500">Cliente Satisfecho</p>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        testimonialsContainer.innerHTML = '<p class="text-center col-span-full text-gray-500">Sé el primero en dejar tu comentario.</p>';
+      }
+    });
+  } catch (error) {
+    testimonialsContainer.innerHTML = '<p class="text-center col-span-full text-red-500">No se pudieron cargar los testimonios en este momento.</p>';
+    console.error(error);
+  }
+}
+
+// Renderizar estrellas para testimonios
+function renderStarIcons(rating) {
+  let stars = '';
+  for (let i = 1; i <= 5; i++) {
+    stars += i <= rating ? '★' : '☆';
+  }
+  return stars;
 }

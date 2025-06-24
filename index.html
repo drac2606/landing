@@ -273,8 +273,18 @@
       </div>
     </section>
 
-    <!-- Estadísticas -->
-    <section class="bg-white py-16 px-4">
+    <!-- Testimonios de Usuarios -->
+    <section id="testimonios" class="bg-white py-20 px-4">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-center text-gray-900 mb-16 font-playfair">
+          Lo que dicen nuestros clientes
+        </h2>
+        <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Los testimonios se cargarán aquí dinámicamente -->
+          <p class="text-center col-span-full text-gray-500">Cargando testimonios...</p>
+        </div>
+      </div>
+    </section>
 
     <!-- Menú Section -->
     <section id="menu" class="bg-gray-50 py-20 px-4">
@@ -528,94 +538,6 @@
       </div>
     </section>
 
-    <!-- Testimonios -->
-    <section class="bg-white py-20 px-4">
-      <div class="max-w-6xl mx-auto">
-        <h2 class="text-4xl font-bold text-center text-gray-900 mb-16 font-playfair">
-          Lo que dicen nuestros clientes
-        </h2>
-        <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Los testimonios se cargarán aquí dinámicamente -->
-          <p class="text-center col-span-full text-gray-500">Cargando testimonios...</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Ubicación Section -->
-    <section id="ubicacion" class="bg-gray-50 py-20 px-4">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold text-gray-900 mb-6 font-playfair">¿Dónde estamos?</h2>
-          <p class="text-xl text-gray-600 mb-8">Encuéntranos en el corazón de La Libertad, Santa Elena</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div class="animate-fade-in-left">
-            <div class="bg-white rounded-2xl p-8 shadow-lg">
-              <h3 class="text-2xl font-bold text-gray-800 mb-6">📍 Ubicación</h3>
-              <div class="space-y-4">
-                <div class="flex items-start space-x-4">
-                  <div class="text-red-600 text-xl">📍</div>
-                  <div>
-                    <p class="font-semibold text-gray-800">Av. Malecón, Santa Elena, Ecuador</p>
-                    <p class="text-gray-600">Frente al mar, en el Patio de Comida Criolla El Malecón</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-4">
-                  <div class="text-red-600 text-xl">🕒</div>
-                  <div>
-                    <p class="font-semibold text-gray-800">Horario de Atención</p>
-                    <p class="text-gray-600">Lunes a Domingo: 12:00 PM - 10:00 PM</p>
-                  </div>
-                </div>
-                <div class="flex items-start space-x-4">
-                  <div class="text-red-600 text-xl">📞</div>
-                  <div>
-                    <p class="font-semibold text-gray-800">Contacto</p>
-                    <p class="text-gray-600">+593 98 123 4567</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="animate-fade-in-right">
-            <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-xl">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d498.3526566533796!2d-80.91030117966758!3d-2.2209383036459482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902e0ec5f68cf57f%3A0xdb804d4178b485d3!2sPatio%20de%20Comida%20Criolla%20El%20Malecon!5e0!3m2!1ses!2sec!4v1750322912812!5m2!1ses!2sec" 
-                class="w-full h-full border-0" 
-                allowfullscreen 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-              </iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Promociones Section -->
-    <section class="bg-white py-20 px-4">
-      <div class="max-w-6xl mx-auto">
-        <h2 class="text-4xl font-bold text-center text-gray-900 mb-16 font-playfair">
-          🎉 Promociones Especiales
-        </h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div class="text-center">
-            <img src="/img/menu.jpg" alt="Promo 1" class="max-w-full h-auto object-contain rounded-2xl shadow-xl mb-6">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">Menú Ejecutivo</h3>
-            <p class="text-gray-600">Plato principal + bebida + postre por solo $15</p>
-          </div>
-          <div class="text-center">
-            <img src="/img/2x1.jpg" alt="Promo 2" class="max-w-full h-auto object-contain rounded-2xl shadow-xl mb-6">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">2x1 en Ceviches</h3>
-            <p class="text-gray-600">Todos los martes y jueves de 2:00 PM a 5:00 PM</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Contacto Section -->
     <section id="contacto" class="bg-gray-50 py-20 px-4">
       <div class="max-w-2xl mx-auto">
@@ -623,7 +545,6 @@
           <h2 class="text-4xl font-bold text-gray-900 mb-6 font-playfair">Reserva tu mesa</h2>
           <p class="text-xl text-gray-600">Asegura tu lugar y disfruta de la mejor comida marina</p>
         </div>
-        
         <div class="bg-white rounded-2xl shadow-xl p-8">
           <form class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -659,6 +580,56 @@
             </button>
           </form>
         </div>
+      </div>
+      <!-- Reservas Recientes Section (ahora aquí) -->
+      <div class="max-w-6xl mx-auto mt-20">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-900 mb-6 font-playfair">Reservas Recientes</h2>
+          <p class="text-xl text-gray-600 mb-8">Últimas reservas confirmadas en tiempo real</p>
+          <div class="inline-flex items-center space-x-4 reservation-counter">
+            <div class="text-3xl font-bold count-animation" id="reservation-counter">0</div>
+            <div class="text-lg">reservas confirmadas</div>
+            <div class="realtime-indicator"></div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="recent-reservations">
+          <div class="col-span-full text-center py-12">
+            <div class="inline-flex items-center space-x-2 text-gray-500">
+              <div class="w-6 h-6 border-2 border-gray-300 border-t-red-600 rounded-full animate-spin"></div>
+              <span>Cargando reservas...</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="stats-card-reservation">
+            <div class="text-3xl font-bold text-red-600 mb-2 count-animation" id="today-reservations">0</div>
+            <div class="text-gray-600">Reservas de hoy</div>
+          </div>
+          <div class="stats-card-reservation">
+            <div class="text-3xl font-bold text-orange-600 mb-2 count-animation" id="week-reservations">0</div>
+            <div class="text-gray-600">Reservas esta semana</div>
+          </div>
+          <div class="stats-card-reservation">
+            <div class="text-3xl font-bold text-green-600 mb-2 count-animation" id="avg-party-size">0</div>
+            <div class="text-gray-600">Promedio por mesa</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de calificación de usuario -->
+    <section id="califica" class="bg-white py-20 px-4">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 font-playfair">¡Califica tu experiencia!</h2>
+        <p class="text-lg text-gray-600 mb-8">Déjanos tu opinión y ayúdanos a mejorar</p>
+        <form id="rating-form" class="bg-gray-50 rounded-2xl shadow-xl p-8 space-y-6">
+          <div class="flex justify-center mb-4" id="star-rating">
+            <!-- Estrellas dinámicas -->
+          </div>
+          <input name="name" type="text" placeholder="Tu nombre" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+          <textarea name="comment" placeholder="Tu comentario" rows="3" class="form-input w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required></textarea>
+          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl text-lg">Enviar calificación</button>
+        </form>
       </div>
     </section>
 
@@ -700,7 +671,7 @@
           </div>
         </div>
         <div class="border-t border-gray-700 pt-8">
-          <p>&copy; ${new Date().getFullYear()} Fuego y Marea. Todos los derechos reservados.</p>
+          <p>&copy; <span id="footer-year"></span> Fuego y Marea. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
