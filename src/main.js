@@ -628,7 +628,8 @@ function updateReservationsDisplay(reservations) {
       setTimeout(() => avgPartySize.classList.remove('count-animation'), 500);
     }
   }
-  const recentReservations = reservations.slice(0, 6);
+  // Mostrar solo las 3 últimas reservas
+  const recentReservations = reservations.slice(0, 3);
   if (recentReservations.length === 0) {
     container.innerHTML = `
       <div class="col-span-full text-center py-12">
@@ -760,7 +761,9 @@ function initializeTestimonials() {
     const testimonialsRef = ref(database, 'testimonials');
     onValue(testimonialsRef, (snapshot) => {
       if (snapshot.exists()) {
-        const testimonials = Object.values(snapshot.val()).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        let testimonials = Object.values(snapshot.val());
+        // Barajar y tomar 3 aleatorios
+        testimonials = testimonials.sort(() => Math.random() - 0.5).slice(0, 3);
         testimonialsContainer.innerHTML = testimonials.map(t => `
           <div class="testimonial-card animate-fade-in-up">
             <div class="flex items-center mb-4">
